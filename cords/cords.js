@@ -1,10 +1,10 @@
-const scale = 0.5;
-const width = 476*2;
-const height = 476*2;
+const scale = 1/4;
+const width = 476*4;
+const height = 476*4;
 const radius = width/2;
 const excludeClosestPegs = 0; //fraction of pegs closest to the current peg that will not be tested
 
-const lines = 1500;
+const lines = 5000;
 var count = 0;
 
 const weight = 0.16;
@@ -13,12 +13,15 @@ const displayWidth = width*scale;
 const displayHeight = height*scale;
 const displayRadius = radius*scale;
 
-const nbPegs = 1000;
+const nbPegs = 500;
 
 var pegs;
 var currentPeg;
 
 var image;
+
+const elLines = document.getElementById('lines');
+const elPercent = document.getElementById('percent');
 
 function brasenhamPoints(x0, y0, x1, y1){
   x0 = Math.floor(x0);
@@ -102,7 +105,7 @@ function Image(array) {
 function setup() {
   background(255);
   createCanvas(displayWidth, displayHeight);
-  ellipse(displayWidth/2,displayHeight/2,displayRadius*2);
+  // ellipse(displayWidth/2,displayHeight/2,displayRadius*2);
 
   count = 0;
 
@@ -128,10 +131,10 @@ function setup() {
   // ellipse(currentPeg.x, currentPeg.y, 20)
 
   //draw the pegs - remove in final version
-  for(let i = 0; i < pegs.length; i += 1) {
-    let peg = pegs[i]
-    ellipse(peg.x*scale, peg.y*scale, 10)
-  }
+  // for(let i = 0; i < pegs.length; i += 1) {
+  //   let peg = pegs[i]
+  //   ellipse(peg.x*scale, peg.y*scale, 10)
+  // }
 
   strokeWeight(weight);
 
@@ -204,6 +207,8 @@ function tdraw() {
 function draw() {
   if(count < lines) {
     tdraw();
+    elLines.innerHTML = Math.floor(count/100)*100;
+    elPercent.innerHTML = Math.floor(count*100/lines) + "%";
   }
   count += 1
 }
