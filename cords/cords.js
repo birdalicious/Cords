@@ -1,10 +1,10 @@
 const scale = 0.5;
-const width = 476;
-const height = 476;
+const width = 476*2;
+const height = 476*2;
 const radius = width/2;
 const excludeClosestPegs = 0; //fraction of pegs closest to the current peg that will not be tested
 
-const lines = 1000;
+const lines = 1500;
 var count = 0;
 
 const weight = 0.16;
@@ -13,7 +13,7 @@ const displayWidth = width*scale;
 const displayHeight = height*scale;
 const displayRadius = radius*scale;
 
-const nbPegs = 500;
+const nbPegs = 1000;
 
 var pegs;
 var currentPeg;
@@ -183,7 +183,7 @@ function tdraw() {
     let index = image.getIndexFromCoord(x,y)
 
     image.array[i] = 0;
-    let reducer = 255*weight/2
+    let reducer = 255*weight
     let newValue = image.setPixelAt(x,y) - reducer > 0 ? image.setPixelAt(x,y) - reducer : 0;
     image.setPixelAt(x,y,);
     // console.log(image.getPixelAt(x,y) + ":" + image.array[index])
