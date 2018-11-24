@@ -1,14 +1,19 @@
-const scale = 1;
+const scale = 0.5;
 const width = 476;
 const height = 476;
 const radius = width/2;
-const excludeClosestPegs = 1/3; //fraction of pegs closest to the current peg that will not be tested
+const excludeClosestPegs = 0; //fraction of pegs closest to the current peg that will not be tested
+
+const lines = 1000;
+var count = 0;
+
+const weight = 0.16;
 
 const displayWidth = width*scale;
 const displayHeight = height*scale;
 const displayRadius = radius*scale;
 
-const nbPegs = 1000;
+const nbPegs = 500;
 
 var pegs;
 var currentPeg;
@@ -99,6 +104,8 @@ function setup() {
   createCanvas(displayWidth, displayHeight);
   ellipse(displayWidth/2,displayHeight/2,displayRadius*2);
 
+  count = 0;
+
   image = new Image(imageArray);
 
   //init the peg locations
@@ -118,7 +125,7 @@ function setup() {
 
   currentPeg = pegs[0];
 
-  ellipse(currentPeg.x, currentPeg.y, 20)
+  // ellipse(currentPeg.x, currentPeg.y, 20)
 
   //draw the pegs - remove in final version
   for(let i = 0; i < pegs.length; i += 1) {
@@ -126,7 +133,7 @@ function setup() {
     ellipse(peg.x*scale, peg.y*scale, 10)
   }
 
-  strokeWeight(0.1);
+  strokeWeight(weight);
 
   tdraw();
 }
@@ -176,21 +183,27 @@ function tdraw() {
     let index = image.getIndexFromCoord(x,y)
 
     image.array[i] = 0;
-    image.setPixelAt(x,y,image.setPixelAt(x,y)/10);
+    let reducer = 255*weight/2
+    let newValue = image.setPixelAt(x,y) - reducer > 0 ? image.setPixelAt(x,y) - reducer : 0;
+    image.setPixelAt(x,y,);
     // console.log(image.getPixelAt(x,y) + ":" + image.array[index])
 
     sum += image.getPixelAt(x,y)
     // image.setPixelAt(x,y,0);
     // console.log(image.getPixelAt(x,y))
+    // stroke('rgba(0,0,0,' + weight + ')');
     // point(x,y)
   }
   // console.log(sum)
 
-  line(currentPeg.x,currentPeg.y,nextPeg.x,nextPeg.y);
+  line(currentPeg.x*scale,currentPeg.y*scale,nextPeg.x*scale,nextPeg.y*scale);
   currentPeg = nextPeg;
 
 }
 
 function draw() {
-  tdraw();
+  if(count < lines) {
+    tdraw();
+  }
+  count += 1
 }
