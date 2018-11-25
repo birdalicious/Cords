@@ -1,10 +1,10 @@
 const scale = 1/4;
-const width = 476*4;
-const height = 476*4;
+const width = 2249;
+const height = 2249;
 const radius = width/2;
 const excludeClosestPegs = 0; //fraction of pegs closest to the current peg that will not be tested
 
-const lines = 5000;
+const lines = 4500;
 var count = 0;
 
 const weight = 0.16;
@@ -101,6 +101,13 @@ function Image(array) {
     return index;
   }
 }
+
+var img;
+
+// function preload() {
+//   img = loadImage("img1.png")
+//   // 
+// }
 
 function setup() {
   background(255);
