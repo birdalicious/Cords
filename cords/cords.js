@@ -1,6 +1,6 @@
 const scale = 1/4;
-const width = 2249;
-const height = 2249;
+const width = 731*4;
+const height = 731*4;
 const radius = width/2;
 const excludeClosestPegs = 0; //fraction of pegs closest to the current peg that will not be tested
 
