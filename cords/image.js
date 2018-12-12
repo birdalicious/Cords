@@ -14,6 +14,8 @@ class ImageHandler {
 
 		this.width = this.image.width;
 		this.height = this.image.height;
+		this.scaledWidth = this.width * this.scaling;
+		this.scaledHeight = this.height * this.scaling;
 
 		//Split and scale colour channels
 		this.RGB = {
@@ -25,7 +27,7 @@ class ImageHandler {
 		//Get the luminosity
 		this.image.filter("gray");
 		this.image.loadPixels();
-		this.lum = this.scaleSingleChannel(0);
+		this.lum = this.scaleChannel(0);
 		for(let i = 0; i < this.lum.length; i += 1) {
 			this.lum[i] = 255 - this.lum[i];
 		}
@@ -36,10 +38,10 @@ class ImageHandler {
 	}
 
 	setPixelAt(value, x, y) {
-		if(x < 0 || x > width || y < 0 || y > height) {
+		if(x < 0 || x > this.scaledWidth || y < 0 || y > this.scaledHeight) {
 			return -1;
 		}
-		let i = this.width * y + x;
+		let i = this.scaledWidth * y + x;
 		this.RGB.r[i] = value[0];
 		this.RGB.g[i] = value[1];
 		this.RGB.b[i] = value[2];
@@ -48,31 +50,31 @@ class ImageHandler {
 	}
 
 	getPixelAt(x, y) {
-		if(x < 0 || x > this.width || y < 0 || y > this.height) {
+		if(x < 0 || x > this.scaledWidth || y < 0 || y > this.scaledHeight) {
 			return [0,0,0];
 		}
-		let red = this.RGB.r[this.width * y + x];
-		let green = this.RGB.g[this.width * y + x];
-		let blue = this.RGB.b[this.width * y + x];
+		let red = this.RGB.r[this.scaledWidth * y + x];
+		let green = this.RGB.g[this.scaledWidth * y + x];
+		let blue = this.RGB.b[this.scaledWidth * y + x];
 
 		reutn [red, green, blue];
 	}
 
 	setLumAt(value, x, y) {
-		if(x < 0 || x > width || y < 0 || y > height) {
+		if(x < 0 || x > this.scaledWidth || y < 0 || y > this.scaledHeight) {
 			return -1;
 		}
-		let i = this.width * y + x;
+		let i = this.scaledWidth * y + x;
 		this.lum[i] = value;
 
 		return i;
 	}
 
 	getLumAt(x, y) {
-		if(x < 0 || x > this.width || y < 0 || y > this.height) {
+		if(x < 0 || x > this.scaledWidth || y < 0 || y > this.scaledHeight) {
 			return [0,0,0];
 		}
-		return this.lum[this.width * y + x];
+		return this.lum[this.scaledWidth * y + x];
 	}
 
 
@@ -84,8 +86,8 @@ class ImageHandler {
 
 		let length = pixels.length*(this.scaling**2);
 		for(let i = 0; i < length; i += 1) {
-			let x = Math.floor(i % (this.width*this.scaling));
-			let y = Math.floor(i / (this.width*this.scaling));
+			let x = Math.floor(i % this.scaledWidth);
+			let y = Math.floor(i / this.scaledWidth);
 
 			scaledPixels.push(
 					pixels[this.width*Math.floor(y/this.scaling)+ Math.floor(x/this.scaling)]

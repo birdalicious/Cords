@@ -1,14 +1,16 @@
 # ImageHandler
 Can only be used on a server or a browser configured to ignore CORS alerts for file:/// URLs.
 ## Properties
-* `width` **number** width of image
-* `height` **number** height of image
-* `scaling` **number** scale factor applied to the image
+* `width` **number** width of image.
+* `height` **number** height of image.
+* `scaling` **number** scale factor applied to the image.
+* `scaledWidth` **number** width of the image after scaling.
+* `scaledHeight` **number** height of the imager after scaling.
 * `RGB` **object** colour channels
-	* `RGB.r` **array** all the pixels in the red cahnnel
-	* `RBG.g` **array** all the pixels in the green channel
-	* `RGB.b` **array** all the pixels in the blue channel
-* `lum` **array** luminosity of the pixels with 255 being the darkest and 0 the brightest
+	* `RGB.r` **array** all the pixels in the red cahnnel.
+	* `RBG.g` **array** all the pixels in the green channel.
+	* `RGB.b` **array** all the pixels in the blue channel.
+* `lum` **array** luminosity of the pixels with 255 being the darkest and 0 the brightest.
 
 ## Constructor
 Any new instance of the ImageHandler should be made in the `preload()` function of p5. 
@@ -144,3 +146,7 @@ const RedChannel = 0;
 scaledRedPixels = ih.scaleSingleChannel(RedChannel);
 ```
 Returns **array** a scaled up red channel.
+
+
+
+# CordDrawing
