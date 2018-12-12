@@ -17,9 +17,9 @@ class ImageHandler {
 
 		//Split and scale colour channels
 		this.RGB = {
-			r : this.scaleSingleChannel(RedChannel),
-			g : this.scaleSingleChannel(GreenChannel),
-			b : this.scaleSingleChannel(BlueChannel)
+			r : this.scaleChannel(RedChannel),
+			g : this.scaleChannel(GreenChannel),
+			b : this.scaleChannel(BlueChannel)
 		};
 
 		//Get the luminosity
@@ -77,7 +77,7 @@ class ImageHandler {
 
 
 
-	scaleSingleChannel(channel) {
+	scaleChannel(channel) {
 		let scaledPixels = []
 
 		pixels = this.getChannel(channel);
