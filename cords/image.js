@@ -35,13 +35,25 @@ class ImageHandler {
 		this.image.updatePixels();
 	}
 
-	get RGB() {
-		return this.RGB;
+	getPixelAt(x, y) {
+		if(x < 0 || x > this.width || y < 0 || y > this.height) {
+			return [0,0,0];
+		}
+		let red = this.RGB.r[this.width * y + x];
+		let green = this.RGB.g[this.width * y + x];
+		let blue = this.RGB.b[this.width * y + x];
+
+		reutn [red, green, blue];
 	}
 
-	get lum() {
-		return this.lum;
+	getLumAt(x, y) {
+		if(x < 0 || x > this.width || y < 0 || y > this.height) {
+			return [0,0,0];
+		}
+		return this.lum[this.width * y + x];
 	}
+
+
 
 	scaleSingleChannel(channel) {
 		let scaledPixels = []

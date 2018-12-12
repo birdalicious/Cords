@@ -1,6 +1,6 @@
-#ImageHandler
+# ImageHandler
 Can only be used on a server or a browser configured to ignore CORS alerts for file:/// URLs.
-##Properties
+## Properties
 * `width` **number** width of image
 * `height` **number** height of image
 * `scaling` **number** scale factor applied to the image
@@ -10,63 +10,90 @@ Can only be used on a server or a browser configured to ignore CORS alerts for f
 	* `RGB.b` **array** all the pixels in the blue channel
 * `lum` **array** luminosity of the pixels with 255 being the darkest and 0 the brightest
 
-##Constructor
+## Constructor
 Any new instance of the ImageHandler should be made in the `preload()` function of p5. 
-###Parameters
+### Parameters
 * `imageLocation` **string** *Default:* `"example.png"` file location of the image.
 * `scaling` **number** *Default:* `1` scale factor to apply to the image for sampling.
 
-###Example
+### Example
 ```javascript
-var imgh;
+var ih;
 function preload() {
-	imgh = new ImageHander("example.png",2);
+	ih = new ImageHander("example.png",2);
 }
 ```
-##setup
+
+## setup
 Once the image is loaded, setup will split the pixels into its RGB channels and a luminosity channels, then scale the image according to the scale factor given in the constructor.
 
 `setup()` must be called in the p5 setup function.
-###Example
+### Example
 ```javascript
-var imgh;
+var ih;
 function preload() {
-	imgh = new ImageHander("example.png",2);
+	ih = new ImageHander("example.png",2);
 }
 
 function setup() {
-	imgh.setup();
+	ih.setup();
 }
 ```
-##getChannel
+
+## getPixelAt
+It will return pixel data at (x, y) cooridinates as array `[red,green,blue]`
+### Parameters
+* x **number** x cooridinate of the pixel.
+* y **number** y cooridinate of the pixel.
+
+### Example
+```javascript
+pixel = ih.getPixelAt(50,100);
+```
+Returns **array** the pixel data at pixel (50, 100).
+
+## getLumAt
+Gets the luminosity of the pixel at (x, y) cooridinate. 255 is the darkest and 0 is the brightest.
+### Parameters
+* x **number** x cooridinate of the pixel.
+* y **number** y cooridinate of the pixel.
+
+### Example
+```javascript
+luminosity = ih.getLumAt(50,100);
+```
+Returns **number** the pixels luminosity at pixel (50, 100).
+
+## getChannel
 Takes the pixels in the p5 layout and returns a single channel.
-###Parameters
+### Parameters
 * `channel` **number** the channel to scale. The id is modulo 4 so 5 is the same as 1.
 	* 0 - red
 	* 1 - green
 	* 2 - blue
 	* 3 - alpha
 
-###Example
+### Example
 ```javascript
 const RedChannel = 0;
 
-redPixels = imgh.getChannel(RedChannel);
+redPixels = ih.getChannel(RedChannel);
 ```
-Return the red channel as an array.
-##scaleSingleChannel
+Returns **array** the red channel.
+
+## scaleSingleChannel
 Scales a single channel of the image as it is easier to split into channels then scale than scale all the channels at once.
-###Parameters
+### Parameters
 * `channel` **number** the channel to scale. The id is modulo 4 so 5 is the same as 1.
 	* 0 - red
 	* 1 - green
 	* 2 - blue
 	* 3 - alpha
 
-###Example
+### Example
 ```javascript
 const RedChannel = 0;
 
-scaledRedPixels = imgh.scaleSingleChannel(RedChannel);
+scaledRedPixels = ih.scaleSingleChannel(RedChannel);
 ```
-Returns a scaled up red channel as an array.
+Returns **array** a scaled up red channel.
