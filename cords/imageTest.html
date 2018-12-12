@@ -1,0 +1,17 @@
+<script src="p5.min.js"></script>
+<script src="image.js"></script>
+<script>
+	var imh;
+	var pixels;
+	
+	function preload() {
+		imh = new ImageHandler("example.png", 2);
+	}
+	
+	function setup() {
+		imh.setup();
+		console.log(imh.pixels)
+		console.log(imh.scale(imh.pixels))
+	}
+
+</script>
