@@ -3,8 +3,8 @@ class CordDrawing extends ImageHandler {
 		if(!args) {
 			args = {};
 		}
-		
-		super("example.png",1);
+
+		super(args.imageLocation || "example.png", args.sampling || 1);
 
 		this.imageLocation = args.imageLocation || "example.png";
 		this.sampling = args.sampling || 4;
