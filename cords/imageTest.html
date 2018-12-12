@@ -5,13 +5,13 @@
 	var pixels;
 	
 	function preload() {
-		imh = new ImageHandler("example.png", 2);
+		imh = new ImageHandler("example.png", 1);
 	}
 	
 	function setup() {
 		imh.setup();
-		console.log(imh.pixels)
-		console.log(imh.scale(imh.pixels))
-	}
+		console.log(imh.image.pixels)
+		console.log(imh.lum)
+}
 
 </script>

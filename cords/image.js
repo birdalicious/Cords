@@ -1,50 +1,72 @@
+const RedChannel = 0;
+const GreenChannel = 1;
+const BlueChannel = 2;
+
 class ImageHandler {
-	constructor(imageLocation = "example.png", sampling) {
+	constructor(imageLocation = "example.png", scaling) {
 		this.image = loadImage(imageLocation);
-		this.sampling = sampling || 1;
+		this.scaling = scaling || 1;
 	}
 
 	setup() {
 		this.image.loadPixels();
-		this.pixels = this.image.pixels;
+		let pixelRestore = this.image.pixels;
 
 		this.width = this.image.width;
 		this.height = this.image.height;
 
-		//Split into colour channels
-		this.channels = {
-			red : this.getChannel(this.pixels, 0),
-			green : this.getChannel(this.pixels, 1),
-			blue : this.getChannel(this.pixels, 2)
+		//Split and scale colour channels
+		this.RGB = {
+			r : this.scaleSingleChannel(RedChannel),
+			g : this.scaleSingleChannel(GreenChannel),
+			b : this.scaleSingleChannel(BlueChannel)
 		};
-		//Get the lumosity
+
+		//Get the luminosity
 		this.image.filter("gray");
 		this.image.loadPixels();
-		this.pixels = this.image.pixels;
+		this.lum = this.scaleSingleChannel(0);
+		for(let i = 0; i < this.lum.length; i += 1) {
+			this.lum[i] = 255 - this.lum[i];
+		}
+
+		//Restore pixels
+		this.image.pixels = pixelRestore;
+		this.image.updatePixels();
 	}
 
-	scale(pixels) {
+	get RGB() {
+		return this.RGB;
+	}
+
+	get lum() {
+		return this.lum;
+	}
+
+	scaleSingleChannel(channel) {
 		let scaledPixels = []
 
-		let length = pixels.length*(this.sampling**2);
+		pixels = this.getChannel(channel);
+
+		let length = pixels.length*(this.scaling**2);
 		for(let i = 0; i < length; i += 1) {
-			let x = Math.floor(i % (this.width*this.sampling));
-			let y = Math.floor(i / (this.width*this.sampling));
+			let x = Math.floor(i % (this.width*this.scaling));
+			let y = Math.floor(i / (this.width*this.scaling));
 
 			scaledPixels.push(
-					pixels[this.width*Math.floor(y/this.sampling)+ Math.floor(x/this.sampling)]
+					pixels[this.width*Math.floor(y/this.scaling)+ Math.floor(x/this.scaling)]
 				);
 		}
 
 		return scaledPixels;
 	}
 
-	getChannel(pixels, channel) {
+	getChannel(channel) {
 		let returnChannel = [];
 
-		let length = pixels.length;
+		let length = this.image.pixels.length;
 		for(let i = channel; i < length; i += 4) {
-			returnChannel.push(pixels[i]);
+			returnChannel.push(this.image.pixels[i]);
 		}
 
 		return returnChannel
