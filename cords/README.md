@@ -40,8 +40,23 @@ function setup() {
 }
 ```
 
+## setPixelAt
+Set the colour values at (x, y) cooridinates.
+Returns `-1` if the cooridinate doesn't exist and the index of the pixel if it was changed successfully.
+### Parameters
+* value **array** the colours value the pixel will be set to.
+* x **number** x cooridinate of the pixel.
+* y **number** y cooridinate of the pixel.
+
+### Example
+```javascript
+index = ih.setPixelAt([255,255,255], 50 ,100);
+```
+Set the pixel at (50, 100) to black.
+Returns **number** the index of the pixel at (50, 100) in the pixel array.
+
 ## getPixelAt
-It will return pixel data at (x, y) cooridinates as array `[red,green,blue]`
+It will return colour values at (x, y) cooridinates as array `[red,green,blue]`
 ### Parameters
 * x **number** x cooridinate of the pixel.
 * y **number** y cooridinate of the pixel.
@@ -51,6 +66,21 @@ It will return pixel data at (x, y) cooridinates as array `[red,green,blue]`
 pixel = ih.getPixelAt(50,100);
 ```
 Returns **array** the pixel data at pixel (50, 100).
+
+## setPixelAt
+Set the luminosity at (x, y) cooridinates.
+Returns `-1` if the cooridinate doesn't exist and the index of the pixel if it was changed successfully.
+### Parameters
+* value **number** the luminosity the pixel will be set to.
+* x **number** x cooridinate of the pixel.
+* y **number** y cooridinate of the pixel.
+
+### Example
+```javascript
+index = ih.setLumAt(255, 50 ,100);
+```
+Set the pixel at (50, 100) to the darkest luminosity.
+Returns **number** the index of the pixel at (50, 100) in the pixel array.
 
 ## getLumAt
 Gets the luminosity of the pixel at (x, y) cooridinate. 255 is the darkest and 0 is the brightest.

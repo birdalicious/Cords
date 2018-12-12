@@ -35,6 +35,18 @@ class ImageHandler {
 		this.image.updatePixels();
 	}
 
+	setPixelAt(value, x, y) {
+		if(x < 0 || x > width || y < 0 || y > height) {
+			return -1;
+		}
+		let i = this.width * y + x;
+		this.RGB.r[i] = value[0];
+		this.RGB.g[i] = value[1];
+		this.RGB.b[i] = value[2];
+
+		return i;
+	}
+
 	getPixelAt(x, y) {
 		if(x < 0 || x > this.width || y < 0 || y > this.height) {
 			return [0,0,0];
@@ -44,6 +56,16 @@ class ImageHandler {
 		let blue = this.RGB.b[this.width * y + x];
 
 		reutn [red, green, blue];
+	}
+
+	setLumAt(value, x, y) {
+		if(x < 0 || x > width || y < 0 || y > height) {
+			return -1;
+		}
+		let i = this.width * y + x;
+		this.lum[i] = value;
+
+		return i;
 	}
 
 	getLumAt(x, y) {
