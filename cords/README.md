@@ -12,7 +12,7 @@ Can only be used on a server or a browser configured to ignore CORS alerts for f
 	* `RGB.b` **array** all the pixels in the blue channel.
 * `lum` **array** luminosity of the pixels with 255 being the darkest and 0 the brightest.
 
-## Constructor
+## constructor
 Any new instance of the ImageHandler should be made in the `preload()` function of p5. 
 ### Parameters
 * `imageLocation` **string** *Default:* `"example.png"` file location of the image.
@@ -28,8 +28,6 @@ function preload() {
 
 ## setup
 Once the image is loaded, setup will split the pixels into its RGB channels and a luminosity channels, then scale the image according to the scale factor given in the constructor.
-
-`setup()` must be called in the p5 setup function.
 ### Example
 ```javascript
 var ih;
@@ -150,3 +148,46 @@ Returns **array** a scaled up red channel.
 
 
 # CordDrawing
+
+## constructor
+Any new instance of the CordDrawing should be made in the `preload()` function of p5.
+### Parameters
+* `args` **object**
+	* `args.imageLocation` **string** *Default* `"example.png"` file location of the image.
+	* `args.sampling` **number** *Default:* `4` amount the image is scaled up for processing and then scaled down for display.
+	* `args.pegs` **number** *Default:* `500` number of pegs placed on the circumference of the circle for the cords to be drawn from.
+	* `args.lines` **number** *Default:* `4000` limit of lines drawn.
+	* `args.weight` **number** *Default:* `0.16` line weight of the cords.
+	* `args.createCanvas` **boolean** *Default:* `True` will create a canvas to draw to. If it is false a graphics area or canvas has to be given in the draw function.
+
+### Example
+```javascipt
+var cd;
+function preload() {
+	cd = new CordDrawing();
+}
+```
+## setup
+Creates the canvas if needed and genral setup needed before the drawing can begin.
+### Example
+```javascript
+function setup() {
+	cd.setup();
+}
+```
+
+## *static* brasenhamPoints
+Calculates which pixels form a line between two points.
+### Parameters
+* `x0` **number** x-coordinate of the first point,
+* `y0` **number** y-coordinate of the first point.
+* `x1` **number** x-coordinate of the second point.
+* `y1` **number** y-coordinate of the second point.
+
+### Returns
+**array** the coordinates of the pixels between the two specified points. The cooridinates are stored as objects `{x: x0, y: y0}`
+### Example
+```javascript
+var points = CordDrawing.brasenhamPoints(0,0,50,100);
+```
+Returns **array** the points between the points (0,0) and (50,100).
