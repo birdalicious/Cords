@@ -16,9 +16,9 @@ class CordDrawing extends ImageHandler {
 		this.weight = args.weight || 0.16;
 
 		if(args.createCanvas === undefined) {
-			this.createCanvas = true
+			this.createCanvas = true;
 		} else {
-			this.createCanvas = args.createCanvas
+			this.createCanvas = args.createCanvas;
 		}
 	}
 
@@ -26,8 +26,27 @@ class CordDrawing extends ImageHandler {
 		super.setup()
 
 		if(this.createCanvas) {
-			createCanvas(this.width)
+			createCanvas(this.width, this.width);
 		}
+
+		//create pegs
+		this.pegs = [];
+		let dTheta = 2*Math.PI/this.nbPegs;
+		let id = 0;
+		for(let theta = 0; theta < 2*Math.PI; theta += dTheta) {
+			let x = this.width/2 + (this.width/2)*Math.cos(theta);
+			let y = this.width/2 + (this.width/2)*Math.sin(theta);
+			this.pegs.push({
+				x: x,
+				y: y,
+				id: id
+   			});
+   			id += 1;
+		}
+
+		this.currentPeg = this.pegs[0];
+
+		strokeWeight(this.weight);
 	}
 
 	draw(g) {
