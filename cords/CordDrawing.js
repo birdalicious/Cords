@@ -15,6 +15,8 @@ class CordDrawing extends ImageHandler {
 		this.lines = args.lines || 4000;
 		this.weight = args.weight || 0.16;
 
+		this.diameter = args.diameter || -1;
+
 		if(args.createCanvas === undefined) {
 			this.createCanvas = true;
 		} else {
@@ -27,9 +29,15 @@ class CordDrawing extends ImageHandler {
 
 		this.counter = 0;
 
-		if(this.createCanvas) {
-			createCanvas(this.width, this.width);
+		if(this.diameter == -1) {
+			this.diameter = this.width
 		}
+
+		if(this.createCanvas) {
+			createCanvas(this.diameter, this.diameter);
+		}
+
+		this.scale = this.diameter/this.width;
 
 		//create pegs
 		this.pegs = [];
@@ -89,11 +97,11 @@ class CordDrawing extends ImageHandler {
 			255
 			);
 
-		let x0 = this.currentPeg.x * (1/this.sampling);
-		let y0 = this.currentPeg.y * (1/this.sampling);
+		let x0 = this.currentPeg.x * (1/this.sampling) * this.scale;
+		let y0 = this.currentPeg.y * (1/this.sampling) * this.scale;
 
-		let x1 = nextPeg.x * (1/this.sampling);
-		let y1 = nextPeg.y * (1/this.sampling);
+		let x1 = nextPeg.x * (1/this.sampling) * this.scale;
+		let y1 = nextPeg.y * (1/this.sampling)* this.scale;
 
 		this.currentPeg = nextPeg;
 
