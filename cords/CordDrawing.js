@@ -4,15 +4,15 @@ class CordDrawing extends ImageHandler {
 			args = {};
 		}
 
-		args.imageLocation = args.imageLocation || "example.png";
+		args.src = args.src || "example.png";
 		args.sampling = args.sampling || 4
 
-		super(args.imageLocation, args.sampling);
+		super(args.src, args.sampling);
 
-		this.imageLocation = args.imageLocation;
-		this.sampling = args.sampling;
-		this.nbPegs  = args.pegs || 500;
-		this.lines = args.lines || 4000;
+		this.src = args.src;
+		this.sampling = Math.floor(args.sampling);
+		this.nbPegs  = Math.floor(args.pegs) || 500;
+		this.lines = Math.floor(args.lines) || 4000;
 		this.weight = args.weight || 0.16;
 
 		this.diameter = args.diameter || -1;
@@ -32,12 +32,11 @@ class CordDrawing extends ImageHandler {
 		if(this.diameter == -1) {
 			this.diameter = this.width
 		}
+		this.scale = this.diameter/this.width;
 
 		if(this.createCanvas) {
 			createCanvas(this.diameter, this.diameter);
 		}
-
-		this.scale = this.diameter/this.width;
 
 		//create pegs
 		this.pegs = [];
@@ -67,29 +66,8 @@ class CordDrawing extends ImageHandler {
 		if(!g && !this.createCanvas) {
 			return false
 		}
-		let lums = [];
-		let ids = [];
-		for(let i = 0; i < this.nbPegs; i += 1) {
-			if(this.pegs.id != this.currentPeg.id) {
-				let testpeg = this.pegs[i];
-				lums.push(this.getAvgLumOfLine(
-					this.currentPeg.x, this.currentPeg.y,
-					testpeg.x, testpeg.y
-					));
-				ids.push(testpeg.id);
-			}
-		}
 
-		let largest = 0;
-		let id = 0;
-		for(let i = 0; i < lums.length; i += 1) {
-			if(lums[i]> largest) {
-				largest	= lums[i];
-				id = ids[i];
-			}
-		}
-
-		let nextPeg = this.pegs[id];
+		let nextPeg = this.findNextPegByLum();
 
 		this.reduceLumOfLine(
 			this.currentPeg.x, this.currentPeg.y,
@@ -112,6 +90,32 @@ class CordDrawing extends ImageHandler {
 		}
 		this.counter += 1;
 
+	}
+
+	findNextPegByLum() {
+		let lums = [];
+		let ids = [];
+		for(let i = 0; i < this.nbPegs; i += 1) {
+			if(this.pegs.id != this.currentPeg.id) {
+				let testpeg = this.pegs[i];
+				lums.push(this.getAvgLumOfLine(
+					this.currentPeg.x, this.currentPeg.y,
+					testpeg.x, testpeg.y
+					));
+				ids.push(testpeg.id);
+			}
+		}
+
+		let largest = 0;
+		let id = 0;
+		for(let i = 0; i < lums.length; i += 1) {
+			if(lums[i]> largest) {
+				largest	= lums[i];
+				id = ids[i];
+			}
+		}
+
+		return this.pegs[id];
 	}
 
 	getAvgLumOfLine(x0,y0,x1,y1) {
