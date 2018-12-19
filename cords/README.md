@@ -1,4 +1,6 @@
 # ImageHandler
+Makes the p5 pixel array easier to use, by letting you refer to pixels by (x,y) cooridinates.
+
 Can only be used on a server or a browser configured to ignore CORS alerts for file:/// URLs.
 ## Properties
 * `width` **number** width of image.
@@ -15,7 +17,7 @@ Can only be used on a server or a browser configured to ignore CORS alerts for f
 ## constructor
 Any new instance of the ImageHandler should be made in the `preload()` function of p5. 
 ### Parameters
-* `imageLocation` **string** *Default:* `"example.png"` file location of the image.
+* `src` **string** *Default:* `"example.png"` file location of the image.
 * `scaling` **number** *Default:* `1` scale factor to apply to the image for sampling.
 
 ### Example
@@ -148,12 +150,25 @@ Returns **array** a scaled up red channel.
 
 
 # CordDrawing
+Takes an image and redraws it using cords of a circle. Each line follows from where the last line left so it acts as a single thread creating the image.
+
+## Properties
+* `src` **string** file location of the image.
+* `sampling` **number** amount the image is scaled up for processing and then scaled down for display.
+* `nbPegs` **number** number of pegs for which the cords can connect to and from.
+* `lines` **number** the limit of lines drawn.
+* `weight` **number** the stroke weight of the lines.
+* `diameter` **number** the diameter of the circle that is displayed. *Value is set in setup function if it isn't set in the args.*
+* `scale` **number** the value of the display diameter divided by the image width. *Value is set in the setup function.*
+* `counter` **number** the number of line that have been drawn.
+* `createCanvas` **boolean** wether or not the canvas has been created by the class or it is drawing to a graphics area.
 
 ## constructor
 Any new instance of the CordDrawing should be made in the `preload()` function of p5.
 ### Parameters
 * `args` **object**
-	* `args.imageLocation` **string** *Default* `"example.png"` file location of the image.
+	* `args.src` **string** *Default* `"example.png"` file location of the image.
+	* `args.diameter` **number** *Default: the width of the image* sets the size of the circle that will be draw and the size of the canvas if `args.createCanvas` is `true`.
 	* `args.sampling` **number** *Default:* `4` amount the image is scaled up for processing and then scaled down for display.
 	* `args.pegs` **number** *Default:* `500` number of pegs placed on the circumference of the circle for the cords to be drawn from.
 	* `args.lines` **number** *Default:* `4000` limit of lines drawn.
@@ -176,10 +191,55 @@ function setup() {
 }
 ```
 
+## draw
+Draws a line between the current peg and then next next which is the best candiate to create the image.
+
+Will only draw to the canvas the class has created, or the grpahics area specified. I will not draw to a canvas created by other means. 
+### Parameters
+* `g` **object** *optional* the graphics area you want the image drawn to, if it not specified it will draw to the canvas the class created. 
+
+### Returns
+**undefined** or **boolean** Only returns when something goes wrong or is no longer drawing as the number of lines drawn match the line limit. Returns `false` when no graphics area is given and the class hasn't created a canvas. Returns `undefined` when it is done drawing.
+
+### Example
+```javascript
+function draw() {
+	for(let _ = 0; _ < 10; _ += 1) {
+		cd.draw();
+	}
+}
+``` 
+Draws 10 lines each animation frame.
+
+## findNextPegByLum
+Calculates the best peg to go to from the current peg by the luminosity of the pixels between them.
+### Returns
+**object** peg with largest sum of the luminosities of the pixels between the current peg and the other pegs.
+
+## getAvgLumOfLine
+Calculates the average of the luminosity of the pixles between two points.
+### Parameters
+* `x0` **number** x-coordinate of the first point.
+* `y0` **number** y-coordinate of the first point.
+* `x1` **number** x-coordinate of the second point.
+* `y1` **number** y-coordinate of the second point.
+
+### Returns
+**number** average luminosity of the pixels between tow points.
+
+## reduceLumOfLine
+Reduces the luminosity of the the pixels on a line by a set amount.
+### Parameters
+* `x0` **number** x-coordinate of the first point.
+* `y0` **number** y-coordinate of the first point.
+* `x1` **number** x-coordinate of the second point.
+* `y1` **number** y-coordinate of the second point.
+* `reducer` **number** amount to be subtracted form the luminosity of each pixel.
+
 ## *static* brasenhamPoints
 Calculates which pixels form a line between two points.
 ### Parameters
-* `x0` **number** x-coordinate of the first point,
+* `x0` **number** x-coordinate of the first point.
 * `y0` **number** y-coordinate of the first point.
 * `x1` **number** x-coordinate of the second point.
 * `y1` **number** y-coordinate of the second point.
