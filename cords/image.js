@@ -10,7 +10,6 @@ class ImageHandler {
 
 	setup() {
 		this.image.loadPixels();
-		let pixelRestore = this.image.pixels;
 
 		this.width = this.image.width;
 		this.height = this.image.height;
@@ -25,16 +24,11 @@ class ImageHandler {
 		};
 
 		//Get the luminosity
-		this.image.filter("gray");
-		this.image.loadPixels();
-		this.lum = this.scaleChannel(0);
-		for(let i = 0; i < this.lum.length; i += 1) {
-			this.lum[i] = 255 - this.lum[i];
-		}
 
-		//Restore pixels
-		this.image.pixels = pixelRestore;
-		this.image.updatePixels();
+		this.lum = this.RGB.r;
+		for(let i = 0; i < this.RGB.r.length; i += 1) {
+			this.lum[i] = 255 - (this.RGB.r[i] *  299/1000 + this.RGB.g[i] * 587/1000 + this.RGB.b[i] * 114/1000);
+		}
 	}
 
 	setPixelAt(value, x, y) {
@@ -72,7 +66,7 @@ class ImageHandler {
 
 	getLumAt(x, y) {
 		if(x < 0 || x > this.scaledWidth || y < 0 || y > this.scaledHeight) {
-			return [0,0,0];
+			return 0;
 		}
 		return this.lum[this.scaledWidth * y + x];
 	}
