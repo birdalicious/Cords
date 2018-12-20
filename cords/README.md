@@ -172,7 +172,7 @@ Any new instance of the CordDrawing should be made in the `preload()` function o
 	* `args.diameter` **number** *Default: the width of the image* sets the size of the circle that will be draw and the size of the canvas if `args.createCanvas` is `true`.
 	* `args.sampling` **number** *Default:* `1` amount the image is scaled up for processing and then scaled down for display.
 	* `args.pegs` **number** *Default:* `500` number of pegs placed on the circumference of the circle for the cords to be drawn from.
-	* `args.lines` **number** *Default:* `3250` limit of lines drawn.
+	* `args.lines` **number** *Default:* `2750` limit of lines drawn.
 	* `args.weight` **number** *Default:* `0.16` line weight of the cords.
 	* `args.createCanvas` **boolean** *Default:* `True` will create a canvas to draw to. If it is false a graphics area or canvas has to be given in the draw function.
 

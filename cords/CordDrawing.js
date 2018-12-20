@@ -12,7 +12,7 @@ class CordDrawing extends ImageHandler {
 		this.src = args.src;
 		this.sampling = Math.floor(args.sampling);
 		this.nbPegs  = Math.floor(args.pegs) || 500;
-		this.lines = Math.floor(args.lines) || 3250;
+		this.lines = Math.floor(args.lines) || 2750;
 		this.weight = args.weight || 0.16;
 
 		this.diameter = args.diameter || -1;

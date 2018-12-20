@@ -5,20 +5,20 @@
 Must be run on  a server or a browser with relaxed CORS policy
 </div>
 <script>
-	var cords;
+	var cd;
+	var message = document.getElementById("message");
 	
 	function preload() {
-		cords = new CordDrawing();
+		cd = new CordDrawing();
 	}
 	
 	function setup() {
-		cords.setup();
-		let message = document.getElementById("message");
+		cd.setup();
 		message.innerHTML = ""
 	}
 
 	function draw() {
-		cords.draw();
+		cd.draw();
 	}
 
 </script>
