@@ -5,14 +5,14 @@ class CordDrawing extends ImageHandler {
 		}
 
 		args.src = args.src || "example.png";
-		args.sampling = args.sampling || 4
+		args.sampling = args.sampling || 1
 
 		super(args.src, args.sampling);
 
 		this.src = args.src;
 		this.sampling = Math.floor(args.sampling);
 		this.nbPegs  = Math.floor(args.pegs) || 500;
-		this.lines = Math.floor(args.lines) || 4000;
+		this.lines = Math.floor(args.lines) || 3250;
 		this.weight = args.weight || 0.16;
 
 		this.diameter = args.diameter || -1;
@@ -78,7 +78,7 @@ class CordDrawing extends ImageHandler {
 		this.reduceLumOfLine(
 			this.currentPeg.x, this.currentPeg.y,
 			nextPeg.x, nextPeg.y,
-			255
+			255*this.weight
 			);
 
 		let x0 = this.currentPeg.x * (1/this.sampling) * this.scale;
