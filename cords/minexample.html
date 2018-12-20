@@ -1,6 +1,9 @@
 <script src="p5.min.js"></script>
 <script src="ImageHandler.js"></script>
 <script src="CordDrawing.js"></script>
+<div id="message">
+Must be run on  a server or a browser with relaxed CORS policy
+</div>
 <script>
 	var cords;
 	
@@ -10,7 +13,8 @@
 	
 	function setup() {
 		cords.setup();
-		
+		let message = document.getElementById("message");
+		message.innerHTML = ""
 	}
 
 	function draw() {

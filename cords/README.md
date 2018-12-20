@@ -161,7 +161,8 @@ Takes an image and redraws it using cords of a circle. Each line follows from wh
 * `diameter` **number** the diameter of the circle that is displayed. *Value is set in setup function if it isn't set in the args.*
 * `scale` **number** the value of the display diameter divided by the image width. *Value is set in the setup function.*
 * `counter` **number** the number of line that have been drawn.
-* `createCanvas` **boolean** wether or not the canvas has been created by the class or it is drawing to a graphics area.
+* `createCanvas` **boolean** whether or not the canvas has been created by the class or it is drawing to a graphics area.
+* `initialised` **boolean** If the image has been properly loaded at the end of `setup()` this will be true otherwise it will be false.
 
 ## constructor
 Any new instance of the CordDrawing should be made in the `preload()` function of p5.

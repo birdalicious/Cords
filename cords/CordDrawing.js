@@ -56,6 +56,12 @@ class CordDrawing extends ImageHandler {
 		this.currentPeg = this.pegs[0];
 
 		strokeWeight(this.weight);
+
+		if(this.image.pixels.length == 4) {
+			this.initialised = false;
+		} else {
+			this.initialised = true;
+		}
 	}
 
 	draw(g) {
