@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Cords</title>
+</head>
+<body>
+	<form action="#" id="form">
+		<div id="fileLocation"> The file must be in the same directory as this page</div>
+		sampling: <input type="number" id="sampleInput" value="4"> <br>
+		pegs: <input type="number" id="pegsInput" value="500"> <br>
+		lines: <input type="number" id="linesInput" value="4000"> <br>
+		weight: <input type="number" id="weightInput" value="0.16"> <br>
+		size: <input type="number" id="sizeInput" value="-1"> Leave as -1 for the size of the image <br>
+		<input type="submit" id="submitInput" value="Done">
+	</form>
+</body>
+<script src="p5.min.js"></script>
+<script src="p5.dom.js"></script>
+<script src="ImageHandler.js"></script>
+<script src="CordDrawing.js"></script>
+
+<script>
+	var formInput = document.getElementById("form");
+
+	var fileContainer = document.getElementById("fileLocation");
+
+	var imageInput
+	var sampleInput = document.getElementById("sampleInput");
+	var pegsInput = document.getElementById("pegsInput");
+	var linesInput = document.getElementById("linesInput");
+	var weightInput = document.getElementById("weightInput");
+	var sizeInput = document.getElementById("sizeInput");
+	var submitInput = document.getElementById("submitInput");
+
+	submitInput.addEventListener("click", submit)
+
+
+	var cd;
+	var imageLocation;
+
+	function handleFile(file) {
+		if(file.type === "image") {
+			imageLocation = file.name;
+		}
+	}
+
+	function submit() {
+		formInput.innerHTML = "Please Wait"
+		imageInput.hide();
+
+		args = {
+			src: imageLocation,
+			sampling: sampleInput.value,
+			pegs: pegsInput.value,
+			lines: linesInput.value,
+			weight: weightInput.value,
+			diameter: sizeInput.value 
+		}
+
+		cd = new CordDrawing(args);
+
+		setTimeout(function() {
+			formInput.innerHTML = "This page must be run on  a server or a browser with relaxed a CORS policy (such as Firefox)";
+			cd.setup();
+			if(cd.initialised) {
+				formInput.innerHTML = ""
+			}
+		}, 2000)
+	}
+
+	function setup() {
+		imageInput = createFileInput(handleFile);
+		imageInput.parent(fileContainer)
+	}
+
+	function draw() {
+		if(cd && cd.currentPeg) {
+			cd.draw();
+		}
+	}
+</script>
+
+</html>
