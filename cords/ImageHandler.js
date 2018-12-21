@@ -50,7 +50,7 @@ class ImageHandler {
 		let green = this.RGB.g[this.scaledWidth * y + x];
 		let blue = this.RGB.b[this.scaledWidth * y + x];
 
-		reutn [red, green, blue];
+		return [red, green, blue];
 	}
 
 	setLumAt(value, x, y) {

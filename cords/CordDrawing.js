@@ -94,8 +94,8 @@ class CordDrawing extends ImageHandler {
 		} else {
 			line(x0,y0,x1,y1);
 		}
-		this.counter += 1;
 
+		this.counter += 1;
 	}
 
 	findNextPegByLum() {
@@ -141,10 +141,11 @@ class CordDrawing extends ImageHandler {
 		for(let i = 0; i < points.length; i += 1) {
 			let x = points[i].x;
 			let y = points[i].y;
-			let newValue = super.getLumAt(x,y) - reducer > 0 ? super.getLumAt(x,y) - reducer : 0;
+			let lum = super.getLumAt(x,y);
+			let newValue = lum - reducer > 0 ? lum - reducer : 0;
 			super.setLumAt(newValue,x,y);
 		}
-	} 
+	}
 
 	static brasenhamPoints(x0, y0, x1, y1){
 		x0 = Math.floor(x0);
