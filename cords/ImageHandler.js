@@ -73,18 +73,18 @@ class ImageHandler {
 
 
 	scaleChannel(channel) {
-		let scaledPixels = []
+		let scaledPixels = [];
 
-		pixels = this.getChannel(channel);
+		let pixels = this.getChannel(channel);
 
-		let length = pixels.length*(this.scaling**2);
+		let length = pixels.length * Math.pow(this.scaling,2);
 		for(let i = 0; i < length; i += 1) {
 			let x = Math.floor(i % this.scaledWidth);
 			let y = Math.floor(i / this.scaledWidth);
 
 			scaledPixels.push(
-					pixels[this.width*Math.floor(y/this.scaling)+ Math.floor(x/this.scaling)]
-				);
+				pixels[this.width*Math.floor(y/this.scaling)+ Math.floor(x/this.scaling)]
+			);
 		}
 
 		return scaledPixels;
@@ -98,6 +98,6 @@ class ImageHandler {
 			returnChannel.push(this.image.pixels[i]);
 		}
 
-		return returnChannel
+		return returnChannel;
 	}
 }

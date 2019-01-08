@@ -5,7 +5,7 @@ class CordDrawing extends ImageHandler {
 		}
 
 		args.src = args.src || "example.png";
-		args.sampling = args.sampling || 1
+		args.sampling = args.sampling || 1;
 
 		super(args.src, args.sampling);
 
@@ -25,12 +25,12 @@ class CordDrawing extends ImageHandler {
 	}
 
 	setup() {
-		super.setup()
+		super.setup();
 
 		this.counter = 0;
 
 		if(this.diameter == -1) {
-			this.diameter = this.width
+			this.diameter = this.width;
 		}
 		this.scale = this.diameter/this.width;
 
@@ -49,13 +49,11 @@ class CordDrawing extends ImageHandler {
 				x: x,
 				y: y,
 				id: id
-   			});
-   			id += 1;
+			});
+			id += 1;
 		}
 
 		this.currentPeg = this.pegs[0];
-
-		strokeWeight(this.weight);
 
 		if(this.image.pixels.length == 4) {
 			this.initialised = false;
@@ -70,7 +68,7 @@ class CordDrawing extends ImageHandler {
 		}
 
 		if(!g && !this.createCanvas) {
-			return false
+			return false;
 		}
 
 		let nextPeg = this.findNextPegByLum();
@@ -79,7 +77,7 @@ class CordDrawing extends ImageHandler {
 			this.currentPeg.x, this.currentPeg.y,
 			nextPeg.x, nextPeg.y,
 			255*this.weight
-			);
+		);
 
 		let x0 = this.currentPeg.x * (1/this.sampling) * this.scale;
 		let y0 = this.currentPeg.y * (1/this.sampling) * this.scale;
@@ -90,8 +88,10 @@ class CordDrawing extends ImageHandler {
 		this.currentPeg = nextPeg;
 
 		if(g) {
+			g.strokeWeight(this.weight);
 			g.line(x0,y0,x1,y1);
 		} else {
+			strokeWeight(this.weight);
 			line(x0,y0,x1,y1);
 		}
 
@@ -107,7 +107,7 @@ class CordDrawing extends ImageHandler {
 				lums.push(this.getAvgLumOfLine(
 					this.currentPeg.x, this.currentPeg.y,
 					testpeg.x, testpeg.y
-					));
+				));
 				ids.push(testpeg.id);
 			}
 		}
@@ -161,11 +161,12 @@ class CordDrawing extends ImageHandler {
 
 		let points = [];
 
-		while(true){
+		let condition = true;
+		while(condition){
 			points.push({x: x0, y: y0});
 
 			if ((x0==x1) && (y0==y1)){
-				break;
+				condition = false;
 			}
 			let e2 = 2*err;
 			if (e2 >-dy){
