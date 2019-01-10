@@ -70,8 +70,6 @@ class ImageHandler {
 		return this.lum[this.scaledWidth * y + x];
 	}
 
-
-
 	scaleChannel(channel) {
 		let scaledPixels = [];
 
@@ -83,7 +81,7 @@ class ImageHandler {
 			let y = Math.floor(i / this.scaledWidth);
 
 			scaledPixels.push(
-				pixels[this.width*Math.floor(y/this.scaling)+ Math.floor(x/this.scaling)]
+				pixels[this.width*Math.floor(y/this.scaling) + Math.floor(x/this.scaling)]
 			);
 		}
 

@@ -1,14 +1,17 @@
 class CordDrawing extends ImageHandler {
 	constructor(args) {
+		//Create object if one wasn't passed
 		if(!args) {
 			args = {};
 		}
 
+		//Defaults for the imagehandler class
 		args.src = args.src || "example.png";
 		args.sampling = args.sampling || 1;
 
 		super(args.src, args.sampling);
 
+		//Set default values or get them args object
 		this.src = args.src;
 		this.sampling = Math.floor(args.sampling);
 		this.nbPegs  = Math.floor(args.pegs) || 500;
@@ -38,7 +41,7 @@ class CordDrawing extends ImageHandler {
 			createCanvas(this.diameter, this.diameter);
 		}
 
-		//create pegs
+		//Create pegs
 		this.pegs = [];
 		let dTheta = 2*Math.PI/this.nbPegs;
 		let id = 0;
@@ -55,6 +58,7 @@ class CordDrawing extends ImageHandler {
 
 		this.currentPeg = this.pegs[0];
 
+		//Check that the image has been loaded properly
 		if(this.image.pixels.length == 4) {
 			this.initialised = false;
 		} else {
@@ -67,6 +71,7 @@ class CordDrawing extends ImageHandler {
 			return;
 		}
 
+		//Makes sure there is an area to draw to
 		if(!g && !this.createCanvas) {
 			return false;
 		}
@@ -79,6 +84,8 @@ class CordDrawing extends ImageHandler {
 			255*this.weight
 		);
 
+
+		//Calculate the x and y coordinates to the right scale
 		let x0 = this.currentPeg.x * (1/this.sampling) * this.scale;
 		let y0 = this.currentPeg.y * (1/this.sampling) * this.scale;
 
@@ -101,6 +108,7 @@ class CordDrawing extends ImageHandler {
 	findNextPegByLum() {
 		let lums = [];
 		let ids = [];
+		//Get a list of average luminosity of lines
 		for(let i = 0; i < this.nbPegs; i += 1) {
 			if(this.pegs.id != this.currentPeg.id) {
 				let testpeg = this.pegs[i];
@@ -112,6 +120,7 @@ class CordDrawing extends ImageHandler {
 			}
 		}
 
+		//Find the peg that gives the highest average
 		let largest = 0;
 		let id = 0;
 		for(let i = 0; i < lums.length; i += 1) {
