@@ -208,12 +208,10 @@ Will only draw to the canvas the class has created, or the grpahics area specifi
 ### Example
 ```javascript
 function draw() {
-	for(let _ = 0; _ < 10; _ += 1) {
-		cd.draw();
-	}
+	cd.draw();
 }
 ``` 
-Draws 10 lines each animation frame.
+Draws a line each animaion frame.
 
 ## findNextPegByLum
 Calculates the best peg to go to from the current peg by the luminosity of the pixels between them.
