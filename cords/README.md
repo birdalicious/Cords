@@ -253,3 +253,20 @@ Calculates which pixels form a line between two points.
 var points = CordDrawing.brasenhamPoints(0,0,50,100);
 ```
 Returns **array** the points between the points (0,0) and (50,100).
+
+# Example Page
+Must be run on a server or a browser with relaxed CORS policy like FireFox.
+This page uses the p5 dom library so images can be loaded outside of the p5 `preload` function.
+## handleFile
+Sets global variable `imageLocation` to the name of the file.
+### Parameters
+* `file` **file** file selected
+
+## submit
+Sets up the Cord Drawing class once the user has entered thier values. Also replaces the form with messages to the user to keep them informed on what is happening. 
+
+## setup
+The setup function called by p5. The class is not setup here as it needs to wait for the user's input before it is initialised. This function contains a p5 dom function `createFileInput` that uses the `handleFile` function. This function creates the file picker button and uses the `handleFile` when the input is changed.
+
+## draw
+The draw function called by p5. First it checks that an instance of the class has been created and then it checks if it has been fully setup, otherwise it would create errors.
