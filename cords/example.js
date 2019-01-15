@@ -1,3 +1,4 @@
+var message = document.getElementById("message");
 var formInput = document.getElementById("form");
 
 var fileContainer = document.getElementById("fileLocation");
@@ -23,8 +24,9 @@ function handleFile(file) {
 }
 
 function submit() {
-	formInput.innerHTML = "Please Wait";
-	imageInput.hide();
+	document.body.style.backgroundColor = "#fff";
+	formInput.innerHTML = "";
+	message.innerHTML = "Please Wait";
 
 	let args = {
 		src: imageLocation,
@@ -38,12 +40,12 @@ function submit() {
 	cd = new CordDrawing(args);
 
 	setTimeout(function() { // delay to give time to load the image in
-		formInput.innerHTML = "This page must be run on  a server or a browser with relaxed a CORS policy (such as Firefox)";
+		message.innerHTML = "This page must be run on  a server or a browser with relaxed a CORS policy (such as Firefox)";
 
 		cd.setup();
 		
 		if(cd.initialised) {
-			formInput.innerHTML = "";
+			message.innerHTML = "";
 		}
 	}, 2000);
 }

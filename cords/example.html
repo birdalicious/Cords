@@ -2,19 +2,48 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Cords Example</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Cords</title>
+	<link rel="stylesheet" href="materialdesign.css">
 </head>
 <body>
-	<form action="#" id="form">
-		<div id="fileLocation"> The file must be in the same directory as this page</div>
-		sampling: <input type="number" id="sampleInput" value="2"> <br>
-		pegs: <input type="number" id="pegsInput" value="500"> <br>
-		lines: <input type="number" id="linesInput" value="5500"> <br>
-		weight: <input type="number" id="weightInput" value="0.16"> <br>
-		size: <input type="number" id="sizeInput" value="800"> Set as -1 for the size of the image <br>
-		<input type="submit" id="submitInput" value="Done">
-	</form>
-	
+	<div id="message"></div>
+	<div id="form">
+	<div class="container">
+		<form action="#">
+			<h1>Settings</h1>
+			<div class="form-group">
+				<input type="number" value="2" id="sampleInput">
+				<label for="sampleInput" class="control-label">Sampling</label><i class="bar"></i>
+			</div>
+			<div class="form-group">
+				<input type="number" value="500" id="pegsInput">
+				<label for="pegsInput" class="control-label">Pegs</label><i class="bar"></i>
+			</div>
+			<div class="form-group">
+				<input type="number" value="5500" id="linesInput">
+				<label for="linesInput" class="control-label">Lines</label><i class="bar"></i>
+			</div>
+			<div class="form-group">
+				<input type="number" value="0.16" id="weightInput">
+				<label for="weightInput" class="control-label">Weight</label><i class="bar"></i>
+			</div>
+			<div class="form-group">
+				<input type="number" value="800" id="sizeInput">
+				<label for="sizeInput" class="control-label">Size</label><i class="bar"></i>
+			</div>
+			
+			<div id="fileLocation"> <!-- Kinda gave up with this -->
+				The file must be in the same directory as this page
+			</div>
+
+			<div class="button-container">
+				<button type="button" class="button" id="submitInput"><span>Run</span></button>
+			</div>
+		</form>
+	</div>
+	</div>
+
 	<script src="p5.min.js"></script>
 	<script src="p5.dom.js"></script>
 	<script src="ImageHandler.js"></script>
