@@ -3,30 +3,60 @@ const GreenChannel = 1;
 const BlueChannel = 2;
 
 class ImageHandler {
+	get width() {
+		return this._width;
+	}
+
+	get height() {
+		return this._height;
+	}
+
+	get scaling() {
+		return this._scaling;
+	}
+
+	get scaledWidth() {
+		return this._width * this._scaling;
+	}
+
+	get scaledHeight() {
+		return this._height * this._scaling;
+	}
+
+	get image() {
+		return this._image;
+	}
+
+	get RGB() {
+		return this._RGB;
+	}
+
+	get lum() {
+		return this._lum;
+	}
+
 	constructor(src = "example.png", scaling) {
-		this.image = loadImage(src);
-		this.scaling = scaling || 1;
+		this._image = loadImage(src);
+		this._scaling = scaling || 1;
 	}
 
 	setup() {
-		this.image.loadPixels();
+		this._image.loadPixels();
 
-		this.width = this.image.width;
-		this.height = this.image.height;
-		this.scaledWidth = this.width * this.scaling;
-		this.scaledHeight = this.height * this.scaling;
+		this._width = this._image.width;
+		this._height = this._image.height;
 
 		//Split and scale colour channels
-		this.RGB = {
+		this._RGB = {
 			r : this.scaleChannel(RedChannel),
 			g : this.scaleChannel(GreenChannel),
 			b : this.scaleChannel(BlueChannel)
 		};
 
 		//Get the luminosity
-		this.lum = this.RGB.r;
-		for(let i = 0; i < this.RGB.r.length; i += 1) {
-			this.lum[i] = 255 - (this.RGB.r[i] *  299/1000 + this.RGB.g[i] * 587/1000 + this.RGB.b[i] * 114/1000);
+		this._lum = this._RGB.r;
+		for(let i = 0; i < this._RGB.r.length; i += 1) {
+			this._lum[i] = 255 - (this._RGB.r[i] *  299/1000 + this._RGB.g[i] * 587/1000 + this._RGB.b[i] * 114/1000);
 		}
 	}
 
@@ -35,9 +65,9 @@ class ImageHandler {
 			return -1;
 		}
 		let i = this.scaledWidth * y + x;
-		this.RGB.r[i] = value[0];
-		this.RGB.g[i] = value[1];
-		this.RGB.b[i] = value[2];
+		this._RGB.r[i] = value[0];
+		this._RGB.g[i] = value[1];
+		this._RGB.b[i] = value[2];
 
 		return i;
 	}
@@ -46,9 +76,9 @@ class ImageHandler {
 		if(x < 0 || x > this.scaledWidth || y < 0 || y > this.scaledHeight) {
 			return [0,0,0];
 		}
-		let red = this.RGB.r[this.scaledWidth * y + x];
-		let green = this.RGB.g[this.scaledWidth * y + x];
-		let blue = this.RGB.b[this.scaledWidth * y + x];
+		let red = this._RGB.r[this.scaledWidth * y + x];
+		let green = this._RGB.g[this.scaledWidth * y + x];
+		let blue = this._RGB.b[this.scaledWidth * y + x];
 
 		return [red, green, blue];
 	}
@@ -58,7 +88,7 @@ class ImageHandler {
 			return -1;
 		}
 		let i = this.scaledWidth * y + x;
-		this.lum[i] = value;
+		this._lum[i] = value;
 
 		return i;
 	}
@@ -67,7 +97,7 @@ class ImageHandler {
 		if(x < 0 || x > this.scaledWidth || y < 0 || y > this.scaledHeight) {
 			return 0;
 		}
-		return this.lum[this.scaledWidth * y + x];
+		return this._lum[this.scaledWidth * y + x];
 	}
 
 	scaleChannel(channel) {
@@ -75,13 +105,13 @@ class ImageHandler {
 
 		let pixels = this.getChannel(channel);
 
-		let length = pixels.length * Math.pow(this.scaling,2);
+		let length = pixels.length * Math.pow(this._scaling,2);
 		for(let i = 0; i < length; i += 1) {
 			let x = Math.floor(i % this.scaledWidth);
 			let y = Math.floor(i / this.scaledWidth);
 
 			scaledPixels.push(
-				pixels[this.width*Math.floor(y/this.scaling) + Math.floor(x/this.scaling)]
+				pixels[this._width*Math.floor(y/this._scaling) + Math.floor(x/this._scaling)]
 			);
 		}
 
@@ -91,9 +121,9 @@ class ImageHandler {
 	getChannel(channel) {
 		let returnChannel = [];
 
-		let length = this.image.pixels.length;
+		let length = this._image.pixels.length;
 		for(let i = channel; i < length; i += 4) {
-			returnChannel.push(this.image.pixels[i]);
+			returnChannel.push(this._image.pixels[i]);
 		}
 
 		return returnChannel;

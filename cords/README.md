@@ -16,6 +16,7 @@ Can only be used on a server or a browser configured to ignore CORS alerts for f
 	* `RBG.g` **array** all the pixels in the green channel.
 	* `RGB.b` **array** all the pixels in the blue channel.
 * `lum` **array** luminosity of the pixels with 255 being the darkest and 0 the brightest.
+* `image` **object** the p5 image object created when an image is loaded.
 
 ## constructor
 Any new instance of the ImageHandler should be made in the `preload()` function of p5. 
@@ -158,14 +159,14 @@ Takes an image and redraws it using cords of a circle. Each line follows from wh
 ## Properties
 * `src` **string** file location of the image.
 * `sampling` **number** amount the image is scaled up for processing and then scaled down for display.
-* `nbPegs` **number** number of pegs for which the cords can connect to and from.
 * `lines` **number** the limit of lines drawn.
 * `weight` **number** the stroke weight of the lines.
 * `diameter` **number** the diameter of the circle that is displayed. *Value is set in setup function if it isn't set in the args.*
 * `scale` **number** the value of the display diameter divided by the image width. *Value is set in the setup function.*
 * `counter` **number** the number of line that have been drawn.
 * `createCanvas` **boolean** whether or not the canvas has been created by the class or it is drawing to a graphics area.
-* `initialised` **boolean** If the image has been properly loaded at the end of `setup()` this will be true otherwise it will be false.
+* `initialised` **boolean** if the image has been properly loaded at the end of `setup()` this will be true otherwise it will be false.
+* `done` **boolean** if the number of lines draws is equal to the line limit.
 
 ## constructor
 Any new instance of the CordDrawing should be made in the `preload()` function of p5.
