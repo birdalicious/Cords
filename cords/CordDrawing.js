@@ -189,6 +189,8 @@ class CordDrawing extends ImageHandler {
 		}
 	}
 
+	// Adapted from Stack Overflow user Phrogz
+	// https://stackoverflow.com/questions/4672279/bresenham-algorithm-in-javascript
 	static brasenhamPoints(x0, y0, x1, y1){
 		x0 = Math.floor(x0);
 		x1 = Math.floor(x1);

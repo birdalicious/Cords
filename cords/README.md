@@ -241,6 +241,7 @@ Reduces the luminosity of the the pixels on a line by a set amount.
 
 ## *static* brasenhamPoints
 Calculates which pixels form a line between two points.
+Adapted from [StackOverflow](https://stackoverflow.com/questions/4672279/bresenham-algorithm-in-javascript) user Phrogz
 ### Parameters
 * `x0` **number** x-coordinate of the first point.
 * `y0` **number** y-coordinate of the first point.
