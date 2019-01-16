@@ -29,7 +29,7 @@ function submit() {
 	message.innerHTML = "Please Wait";
 
 	let args = {
-		src: imageLocation,
+		src: imageLocation || "example2.jpg",
 		sampling: sampleInput.value,
 		pegs: pegsInput.value,
 		lines: linesInput.value,
